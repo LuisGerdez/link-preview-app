@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const buffer = await response.arrayBuffer();
     const html = new TextDecoder().decode(buffer.slice(0, 500_000));
 
-    const meta = extractMetaTags(html);
+    const meta = extractMetaTags(html, parsed.href);
     return NextResponse.json({ meta });
 
   } catch (e) {

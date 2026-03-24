@@ -1,7 +1,7 @@
 import { parse } from 'node-html-parser';
 import type { MetaTags } from '../../types/meta';
 
-export function extractMetaTags(html: string): MetaTags {
+export function extractMetaTags(html: string, url: string): MetaTags {
   const root = parse(html);
   const get = (attr: string, value: string) =>
     root.querySelector(`meta[${attr}="${value}"]`)?.getAttribute('content') ?? null;
@@ -17,5 +17,6 @@ export function extractMetaTags(html: string): MetaTags {
     twitter_image: get('name', 'twitter:image'),
     html_title: root.querySelector('title')?.text?.trim() ?? null,
     meta_description: get('name', 'description'),
+    site: new URL(url).hostname.replace(/^www\./, '')
   };
 }

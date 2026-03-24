@@ -11,4 +11,6 @@ export type MetaTags = {
   
   html_title: string | null;
   meta_description: string | null;
+
+  site: string | null;
 };
