@@ -13,6 +13,7 @@ import PlatformPreview from "./components/PlatformPreview";
 import PlatformTabs from "./components/PlatformTabs";
 
 import RecentUrls from "./components/RecentUrls";
+import ThemeToggle from "./components/ThemeToggle";
 
 
 export default function Home() {
@@ -55,17 +56,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen mt-6 flex flex-col items-center justify-start py-12 px-4">
+      <div className="fixed top-4 right-4">
+        <ThemeToggle />
+      </div>
 
-      <h1 className="mb-4 mt-6 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">Link Preview Studio</h1>
-      <p className="mb-6 text-lg text-gray-600 font-normal text-body lg:text-xl sm:px-16 xl:px-48">
+      <h1 className="mb-4 mt-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">Link Preview Studio</h1>
+      <p className="mb-6 text-lg text-gray-600 dark:text-gray-400 font-normal lg:text-xl sm:px-16 xl:px-48">
         A web tool to preview how your links look when shared on social media platforms!
       </p>
 
       <PreviewForm onSubmit={handleSubmit} loading={loading} />
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 dark:text-red-400">{error}</p>}
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className="text-gray-600 dark:text-gray-400">Loading...</p>}
 
       {meta && !loading && (
       <div className="w-full flex flex-col items-center gap-6">

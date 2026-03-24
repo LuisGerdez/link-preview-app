@@ -23,7 +23,7 @@ export default function PreviewForm({ onSubmit, loading }: PreviewFormProps) {
         type="text"
         required
         placeholder="Type or paste your URL here..."
-        className="flex-1 border rounded px-3 py-2 text-base"
+        className="flex-1 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
         ref={inputRef}
         value={url}
         onChange={(e) => setUrl(e.target.value)}

@@ -8,13 +8,13 @@ export default function RecentUrls({ urls, onSelect }: RecentUrlsProps) {
 
   return (
     <div className="w-full max-w-md mb-2 mt-4">
-      <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Recent</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Recent</p>
       <ul className="flex flex-col gap-0.5">
         {urls.map((url) => (
           <li key={url}>
             <button
               onClick={() => onSelect(url)}
-              className="w-full text-left text-sm text-blue-500 hover:underline truncate px-2 py-1 rounded hover:bg-gray-50"
+              className="w-full text-left text-sm text-blue-500 dark:text-blue-400 hover:underline truncate px-2 py-1 rounded hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               {url}
             </button>
