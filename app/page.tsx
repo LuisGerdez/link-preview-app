@@ -11,9 +11,11 @@ import PreviewForm from "./components/PreviewForm";
 
 import PlatformPreview from "./components/PlatformPreview";
 import PlatformTabs from "./components/PlatformTabs";
+import MetaTagsPanel from "./components/MetaTagsPanel";
 
 import RecentUrls from "./components/RecentUrls";
 import ThemeToggle from "./components/ThemeToggle";
+import Modal from "./components/Modal";
 
 
 export default function Home() {
@@ -21,7 +23,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState<MetaTags | null>(null);
   const [platform, setPlatform] = useState<Platform>("facebook");
+  const [showMetaModal, setShowMetaModal] = useState(false);
   const { recentUrls, addUrl } = useRecentUrls();
+
+  const foundCount = meta ? Object.values(meta).filter(Boolean).length : 0;
 
   const handleSubmit = async (url: string) => {
     setError(null);
@@ -72,9 +77,23 @@ export default function Home() {
       {loading && <p className="text-gray-600 dark:text-gray-400">Loading...</p>}
 
       {meta && !loading && (
-      <div className="w-full flex flex-col items-center gap-6">
+        <div className="w-full flex flex-col items-center gap-6">
           <PlatformTabs platform={platform} onChange={setPlatform} />
-          <PlatformPreview meta={meta} platform={platform} />
+
+          <div className="flex flex-col items-center gap-3">
+            <PlatformPreview meta={meta} platform={platform} />
+            
+            <button
+              onClick={() => setShowMetaModal(true)}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2 transition-colors cursor-pointer"
+            >
+              {foundCount} meta tags found - View details
+            </button>
+          </div>
+
+          <Modal isOpen={showMetaModal} onClose={() => setShowMetaModal(false)}>
+            <MetaTagsPanel meta={meta} />
+          </Modal>
         </div>
       )}
 
