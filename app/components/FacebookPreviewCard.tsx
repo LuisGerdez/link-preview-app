@@ -1,6 +1,6 @@
 import type { MetaTags } from "../types/meta";
 
-// Based on https://developers.facebook.com/tools/debug/ behavior and styles, but simplified and adapted
+// Based on https://developers.facebook.com/tools/debug/ but simplified (no image behavior)
 
 export default function FacebookPreviewCard({ meta }: { meta: MetaTags }) {
   return (
