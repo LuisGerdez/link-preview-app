@@ -1,23 +1,22 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import type { MetaTags } from "./types/meta";
 
-import FacebookPreviewCard from "./components/FacebookPreviewCard";
+import PreviewForm from "./components/PreviewForm";
+import FacebookPreviewCard from "./components/PreviewCard/FacebookPreviewCard";
 
 
 export default function Home() {
-  const [url, setUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState<MetaTags | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (url: string) => {
     setError(null);
     setLoading(true);
+    setMeta(null);
 
     try {
       const res = await fetch("/api/preview", {
@@ -29,16 +28,15 @@ export default function Home() {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.error || "Unknown error");
-
+      
       setMeta(data.meta);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Error fetching preview");
       setMeta(null);
     } finally {
       setLoading(false);
-      inputRef.current?.focus();
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-12 px-4">
@@ -48,22 +46,7 @@ export default function Home() {
         A web tool to preview how your links look when shared on social media platforms!
       </p>
 
-      <form className="w-full max-w-md flex gap-2 mb-4" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          required
-          placeholder="Type or paste your URL here..."
-          className="flex-1 border rounded px-3 py-2 text-base"
-          ref={inputRef}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-        >
-          Preview
-        </button>
-      </form>
+      <PreviewForm onSubmit={handleSubmit} loading={loading} />
 
       {error && <p className="text-red-500">{error}</p>}
 
