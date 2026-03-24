@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { useRecentUrls } from "./hooks/useRecentUrls";
 
 import type { MetaTags } from "./types/meta";
@@ -35,13 +36,17 @@ export default function Home() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Unknown error");
+      if (!res.ok) {
+        setError(data.error || "Unknown error");
+        if (data.error && data.message) toast.info(data.message, { id: "preview" });
+        return;
+      }
       
       setMeta(data.meta);
       addUrl(url);
 
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Error fetching preview");
+      toast.error(error instanceof Error ? error.message : "Unexpected error", { id: "preview" });
       setMeta(null);
     } finally {
       setLoading(false);
@@ -49,9 +54,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-12 px-4">
+    <div className="min-h-screen mt-6 flex flex-col items-center justify-start py-12 px-4">
 
-      <h1 className="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">Link Preview Studio</h1>
+      <h1 className="mb-4 mt-6 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">Link Preview Studio</h1>
       <p className="mb-6 text-lg text-gray-600 font-normal text-body lg:text-xl sm:px-16 xl:px-48">
         A web tool to preview how your links look when shared on social media platforms!
       </p>
