@@ -3,15 +3,19 @@
 import { useState } from "react";
 
 import type { MetaTags } from "./types/meta";
+import type { Platform } from "./types/platform"
 
 import PreviewForm from "./components/PreviewForm";
-import FacebookPreviewCard from "./components/PreviewCard/FacebookPreviewCard";
+
+import PlatformPreview from "./components/PlatformPreview";
+import PlatformTabs from "./components/PlatformTabs";
 
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState<MetaTags | null>(null);
+  const [platform, setPlatform] = useState<Platform>("facebook");
 
   const handleSubmit = async (url: string) => {
     setError(null);
@@ -53,7 +57,10 @@ export default function Home() {
       {loading && <p>Loading...</p>}
 
       {meta && !loading && (
-        <FacebookPreviewCard meta={meta} />
+      <div className="w-full flex flex-col items-center gap-6">
+          <PlatformTabs platform={platform} onChange={setPlatform} />
+          <PlatformPreview meta={meta} platform={platform} />
+        </div>
       )}
     </div>
   );
