@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRecentUrls } from "./hooks/useRecentUrls";
 
 import type { MetaTags } from "./types/meta";
 import type { Platform } from "./types/platform"
@@ -10,12 +11,15 @@ import PreviewForm from "./components/PreviewForm";
 import PlatformPreview from "./components/PlatformPreview";
 import PlatformTabs from "./components/PlatformTabs";
 
+import RecentUrls from "./components/RecentUrls";
+
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState<MetaTags | null>(null);
   const [platform, setPlatform] = useState<Platform>("facebook");
+  const { recentUrls, addUrl } = useRecentUrls();
 
   const handleSubmit = async (url: string) => {
     setError(null);
@@ -34,6 +38,8 @@ export default function Home() {
       if (!res.ok) throw new Error(data.error || "Unknown error");
       
       setMeta(data.meta);
+      addUrl(url);
+
     } catch (error) {
       setError(error instanceof Error ? error.message : "Error fetching preview");
       setMeta(null);
@@ -62,6 +68,8 @@ export default function Home() {
           <PlatformPreview meta={meta} platform={platform} />
         </div>
       )}
+
+      <RecentUrls urls={recentUrls} onSelect={handleSubmit} />
     </div>
   );
 }
