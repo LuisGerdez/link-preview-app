@@ -1,4 +1,4 @@
-import type { MetaTags } from "../types/meta";
+import type { MetaTags } from "../../types/meta";
 
 // Based on X preview behavior and styles (summary and summary_large_image)
 

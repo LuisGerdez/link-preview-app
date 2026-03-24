@@ -1,4 +1,4 @@
-import type { MetaTags } from "../types/meta";
+import type { MetaTags } from "../../types/meta";
 
 // Based on https://developers.facebook.com/tools/debug/ but simplified (no image behavior)
 
