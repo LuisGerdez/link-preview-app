@@ -2,13 +2,20 @@
 
 import { useRef, useState } from "react";
 
+import type { MetaTags } from "./types/meta";
+
+
 export default function Home() {
   const [url, setUrl] = useState("");
-  const [htmlContent, setHtmlContent] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [meta, setMeta] = useState<MetaTags | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     try {
       const res = await fetch("/api/preview", {
@@ -18,10 +25,16 @@ export default function Home() {
       });
 
       const data = await res.json();
-      setHtmlContent(data.html);
-      
+
+      if (!res.ok) throw new Error(data.error || "Unknown error");
+
+      setMeta(data.meta);
     } catch (error) {
-      console.error("Error fetching preview:", error);
+      setError(error instanceof Error ? error.message : "Error fetching preview");
+      setMeta(null);
+    } finally {
+      setLoading(false);
+      inputRef.current?.focus();
     }
   }
 
@@ -50,7 +63,13 @@ export default function Home() {
         </button>
       </form>
 
-      <textarea className="w-full max-w-md border rounded px-3 py-2 text-base" readOnly value={htmlContent}></textarea>
+      {error && <p className="text-red-500">{error}</p>}
+      {loading && <p>Loading...</p>}
+      {meta && (
+        <div className="w-full max-w-md border rounded px-3 py-2 text-base">
+          <pre>{JSON.stringify(meta, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
