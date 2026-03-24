@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 
 import type { MetaTags } from "./types/meta";
 
+import FacebookPreviewCard from "./components/FacebookPreviewCard";
+
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -64,11 +66,11 @@ export default function Home() {
       </form>
 
       {error && <p className="text-red-500">{error}</p>}
+
       {loading && <p>Loading...</p>}
-      {meta && (
-        <div className="w-full max-w-md border rounded px-3 py-2 text-base">
-          <pre>{JSON.stringify(meta, null, 2)}</pre>
-        </div>
+
+      {meta && !loading && (
+        <FacebookPreviewCard meta={meta} />
       )}
     </div>
   );
