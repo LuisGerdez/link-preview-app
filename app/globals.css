@@ -13,6 +13,33 @@
   --foreground: #ededed;
 }
 
+/* Custom animations */
+@keyframes fade-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes content-in {
+  from { opacity: 0; transform: scale(0.9) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-slide-up {
+  animation: fade-slide-up 0.4s ease-out both;
+}
+
+.animate-content-in {
+  animation: content-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
