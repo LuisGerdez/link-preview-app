@@ -19,16 +19,19 @@ import Modal from "./components/Modal";
 
 
 export default function Home() {
+  const [url, setUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [meta, setMeta] = useState<MetaTags | null>(null);
   const [platform, setPlatform] = useState<Platform>("facebook");
   const [showMetaModal, setShowMetaModal] = useState(false);
+
   const { recentUrls, addUrl } = useRecentUrls();
 
   const foundCount = meta ? Object.values(meta).filter(Boolean).length : 0;
 
-  const handleSubmit = async (url: string) => {
+  const handleSubmit = async (submittedUrl: string) => {
+    setUrl(submittedUrl);
     setError(null);
     setLoading(true);
     setMeta(null);
@@ -37,7 +40,7 @@ export default function Home() {
       const res = await fetch("/api/preview", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url: submittedUrl }),
       });
 
       const data = await res.json();
@@ -49,7 +52,7 @@ export default function Home() {
       }
       
       setMeta(data.meta);
-      addUrl(url);
+      addUrl(submittedUrl);
 
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unexpected error", { id: "preview" });
@@ -70,7 +73,7 @@ export default function Home() {
         A web tool to preview how your links look when shared on social media platforms!
       </p>
 
-      <PreviewForm onSubmit={handleSubmit} loading={loading} />
+      <PreviewForm url={url} onUrlChange={setUrl} onSubmit={handleSubmit} loading={loading} />
 
       {error && <p className="text-red-500 dark:text-red-400 animate-fade-slide-up">{error}</p>}
 
