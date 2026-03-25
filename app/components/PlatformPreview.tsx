@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import type { MetaTags } from "../types/meta";
 import type { Platform } from "../types/platform";
 
@@ -11,11 +12,19 @@ interface PlatformPreviewProps {
 }
 
 export default function PlatformPreview({ meta, platform }: PlatformPreviewProps) {
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [meta]);
+
+  const onImgError = () => setImgError(true);
+
   return (
     <div className="w-full max-w-md px-4 sm:px-0">
-      {platform === "facebook" && <FacebookPreviewCard meta={meta} />}
-      {platform === "twitter" && <TwitterPreviewCard meta={meta} />}
-      {platform === "slack" && <SlackPreviewCard meta={meta} />}
+      {platform === "facebook" && <FacebookPreviewCard meta={meta} imgError={imgError} onImgError={onImgError} />}
+      {platform === "twitter" && <TwitterPreviewCard meta={meta} imgError={imgError} onImgError={onImgError} />}
+      {platform === "slack" && <SlackPreviewCard meta={meta} imgError={imgError} onImgError={onImgError} />}
     </div>
   );
 }

@@ -1,16 +1,25 @@
 import type { MetaTags } from "../../types/meta";
 
+interface Props {
+  meta: MetaTags;
+  imgError: boolean;
+  onImgError: () => void;
+}
+
 // Based on X preview behavior and styles (summary and summary_large_image)
 
-export default function TwitterPreviewCard({ meta }: { meta: MetaTags }) {
-  if (meta.twitter_card === 'summary_large_image' && meta.twitter_image) {
+export default function TwitterPreviewCard({ meta, imgError, onImgError }: Props) {
+  const showImage = meta.twitter_image && !imgError;
+
+  if (meta.twitter_card === 'summary_large_image' && showImage) {
     return (
       <div className="w-full max-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
         <div className="relative bg-[rgb(245,246,247)]">
           <img
-            src={meta.twitter_image}
+            src={meta.twitter_image!}
             alt="Preview"
             className="w-full object-contain bg-white"
+            onError={onImgError}
           />
           <div className="absolute left-2 bottom-2 bg-black/80 text-white text-[15px] px-2 py-1 rounded">
             {meta.twitter_title || meta.html_title || "(No title)"}
@@ -28,11 +37,12 @@ export default function TwitterPreviewCard({ meta }: { meta: MetaTags }) {
   return (
     <div className="flex items-stretch w-full max-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
       <div className="flex items-center justify-center w-[25%] bg-white border-r border-[rgb(229,231,235)]">
-        {meta.twitter_image ? (
+        {showImage ? (
           <img
-            src={meta.twitter_image}
+            src={meta.twitter_image!}
             alt="Preview"
             className="w-full object-contain"
+            onError={onImgError}
           />
         ) : (
           <span className="inline-flex items-center justify-center w-10 h-10 text-[rgb(107,114,128)]">

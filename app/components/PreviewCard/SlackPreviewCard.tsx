@@ -1,9 +1,16 @@
-import { useState } from "react";
 import type { MetaTags } from "../../types/meta";
+
+interface Props {
+  meta: MetaTags;
+  imgError: boolean;
+  onImgError: () => void;
+}
 
 // Based on Slack's unfurl preview style
 
-export default function SlackPreviewCard({ meta }: { meta: MetaTags }) {
+export default function SlackPreviewCard({ meta, imgError, onImgError }: Props) {
+  const showImage = meta.og_image && !imgError;
+
   return (
     <div
       className="w-full max-w-md bg-white border border-gray-200 rounded overflow-hidden"
@@ -25,18 +32,17 @@ export default function SlackPreviewCard({ meta }: { meta: MetaTags }) {
             {meta.og_description || meta.meta_description || "(No description)"}
           </p>
 
-          {meta.og_image && (
+          {showImage && (
             <div
-              className={`mt-2 rounded overflow-hidden`}
+              className="mt-2 rounded overflow-hidden"
               style={{ background: 'rgb(209,213,219)', maxHeight: '200px' }}
             >
               <img
-                src={meta.og_image}
+                src={meta.og_image!}
                 alt="Preview"
                 className="w-full h-auto object-cover rounded"
-                style={{
-                  maxHeight: '200px',
-                }}
+                style={{ maxHeight: '200px' }}
+                onError={onImgError}
               />
             </div>
           )}

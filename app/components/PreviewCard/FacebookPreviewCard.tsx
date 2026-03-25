@@ -1,16 +1,25 @@
 import type { MetaTags } from "../../types/meta";
 
+interface Props {
+  meta: MetaTags;
+  imgError: boolean;
+  onImgError: () => void;
+}
+
 // Based on https://developers.facebook.com/tools/debug/ but simplified (no image behavior)
 
-export default function FacebookPreviewCard({ meta }: { meta: MetaTags }) {
+export default function FacebookPreviewCard({ meta, imgError, onImgError }: Props) {
+  const showImage = meta.og_image && !imgError;
+
   return (
     <div className="w-full flex flex-col max-w-md border border-[rgb(223,222,219)] overflow-hidden bg-white shadow-md rounded-none" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
-        {meta.og_image && (
-            <div className="w-full h-48 bg-gray-100 relative" style={{ paddingTop: '52.5%' }}>
+        {showImage && (
+            <div className="w-full bg-gray-100 relative" style={{ paddingTop: '52.5%' }}>
             <img
-                src={meta.og_image}
+                src={meta.og_image!}
                 alt="Preview"
                 className="absolute inset-0 w-full h-full object-cover"
+                onError={onImgError}
             />
             </div>
         )}
