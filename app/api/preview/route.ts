@@ -50,7 +50,11 @@ export async function POST(req: NextRequest) {
     const html = new TextDecoder().decode(buffer.slice(0, 500_000));
 
     const meta = extractMetaTags(html, parsed.href);
-    return NextResponse.json({ meta });
+    return NextResponse.json({ meta }, { status: 200, headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    }});
 
   } catch (e) {
     if (e instanceof Error && e.name === 'AbortError') {
