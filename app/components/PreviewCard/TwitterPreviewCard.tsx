@@ -5,7 +5,7 @@ import type { MetaTags } from "../../types/meta";
 export default function TwitterPreviewCard({ meta }: { meta: MetaTags }) {
   if (meta.twitter_card === 'summary_large_image' && meta.twitter_image) {
     return (
-      <div className="max-w-md min-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
+      <div className="w-full max-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
         <div className="relative bg-[rgb(245,246,247)]">
           <img
             src={meta.twitter_image}
@@ -26,7 +26,7 @@ export default function TwitterPreviewCard({ meta }: { meta: MetaTags }) {
   }
 
   return (
-    <div className="flex items-stretch min-w-md max-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
+    <div className="flex items-stretch w-full max-w-md border border-[rgb(229,231,235)] bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
       <div className="flex items-center justify-center w-[25%] bg-white border-r border-[rgb(229,231,235)]">
         {meta.twitter_image ? (
           <img

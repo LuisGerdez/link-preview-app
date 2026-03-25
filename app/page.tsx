@@ -85,10 +85,10 @@ export default function Home() {
       )}
 
       {meta && !loading && (
-        <div className="w-full flex flex-col items-center gap-6 animate-fade-slide-up">
+        <div className="w-full max-w-xl px-4 flex flex-col items-center gap-6 animate-fade-slide-up">
           <PlatformTabs platform={platform} onChange={setPlatform} />
 
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-3 w-full">
             <PlatformPreview meta={meta} platform={platform} />
             
             <button

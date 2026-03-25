@@ -4,7 +4,7 @@ import type { MetaTags } from "../../types/meta";
 
 export default function FacebookPreviewCard({ meta }: { meta: MetaTags }) {
   return (
-    <div className="min-w-md flex flex-col max-w-md border border-[rgb(223,222,219)] overflow-hidden bg-white shadow-md rounded-none" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
+    <div className="w-full flex flex-col max-w-md border border-[rgb(223,222,219)] overflow-hidden bg-white shadow-md rounded-none" style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}>
         {meta.og_image && (
             <div className="w-full h-48 bg-gray-100 relative" style={{ paddingTop: '52.5%' }}>
             <img

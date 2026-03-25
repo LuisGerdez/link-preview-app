@@ -10,7 +10,10 @@ interface PlatformPreviewProps {
 }
 
 export default function PlatformPreview({ meta, platform }: PlatformPreviewProps) {
-  if (platform === "facebook") return <FacebookPreviewCard meta={meta} />;
-  if (platform === "twitter") return <TwitterPreviewCard meta={meta} />;
-  return null;
+  return (
+    <div className="w-full max-w-md px-4 sm:px-0">
+      {platform === "facebook" && <FacebookPreviewCard meta={meta} />}
+      {platform === "twitter" && <TwitterPreviewCard meta={meta} />}
+    </div>
+  );
 }
