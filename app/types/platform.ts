@@ -1,1 +1,1 @@
-export type Platform = "facebook" | "twitter";
+export type Platform = "facebook" | "twitter" | "slack";

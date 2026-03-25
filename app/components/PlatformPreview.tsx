@@ -3,6 +3,7 @@ import type { Platform } from "../types/platform";
 
 import FacebookPreviewCard from "./PreviewCard/FacebookPreviewCard";
 import TwitterPreviewCard from "./PreviewCard/TwitterPreviewCard";
+import SlackPreviewCard from "./PreviewCard/SlackPreviewCard";
 
 interface PlatformPreviewProps {
   meta: MetaTags;
@@ -14,6 +15,7 @@ export default function PlatformPreview({ meta, platform }: PlatformPreviewProps
     <div className="w-full max-w-md px-4 sm:px-0">
       {platform === "facebook" && <FacebookPreviewCard meta={meta} />}
       {platform === "twitter" && <TwitterPreviewCard meta={meta} />}
+      {platform === "slack" && <SlackPreviewCard meta={meta} />}
     </div>
   );
 }

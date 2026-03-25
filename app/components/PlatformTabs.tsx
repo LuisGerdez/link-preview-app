@@ -10,6 +10,7 @@ interface PlatformTabsProps {
 const TABS: { value: Platform; label: string }[] = [
   { value: "facebook", label: "Facebook" },
   { value: "twitter", label: "Twitter / X" },
+  { value: "slack", label: "Slack" },
 ];
 
 export default function PlatformTabs({ platform, onChange }: PlatformTabsProps) {
