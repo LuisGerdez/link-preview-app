@@ -47,7 +47,7 @@ export default function Home() {
 
       if (!res.ok) {
         setError(data.error || "Unknown error");
-        if (data.error && data.message) toast.info(data.message, { id: "preview" });
+        if (data.error && data.message) toast.error(data.message, { id: "preview" });
         return;
       }
       
